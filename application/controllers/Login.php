@@ -6,7 +6,8 @@ class Login extends CI_Controller
 {
 	public function index()
 	{
-		$this->load->view('login');
+		$_POST['login_failure'] = false;
+		$this->load->view('login/login');
 	}
 
 	public function login_now()
@@ -17,7 +18,6 @@ class Login extends CI_Controller
 			                    'url'
 		                    ));
 		$this->load->library('form_validation');
-		$this->form_validation->set_rules('username', 'User name', 'required');
 		$this->form_validation->set_rules('username', 'Username', 'required|min_length[8]|max_length[25]', array(
 			                                            'required' => 'You have not provided %s.',
 			                                            'min_length' => 'Something different.'
@@ -26,7 +26,7 @@ class Login extends CI_Controller
 		$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
 		if($this->form_validation->run() == false) {
 			$this->load->model('User');
-			$this->load->view('login');
+			$this->load->view('login/login');
 		}
 		else {
 			$this->load->model('User');
@@ -35,7 +35,7 @@ class Login extends CI_Controller
 			}
 			else {
 				$_POST['login_failure'] = true;
-				$this->load->view('login');
+				$this->load->view('login/login');
 			}
 
 		}
