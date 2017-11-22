@@ -359,9 +359,9 @@ class CI_Xmlrpc {
 
 		$parts = parse_url($url);
 
-		if (isset($parts['User'], $parts['pass']))
+		if (isset($parts['user'], $parts['pass']))
 		{
-			$parts['host'] = $parts['User'].':'.$parts['pass'].'@'.$parts['host'];
+			$parts['host'] = $parts['user'].':'.$parts['pass'].'@'.$parts['host'];
 		}
 
 		$path = isset($parts['path']) ? $parts['path'] : '/';
@@ -659,9 +659,9 @@ class XML_RPC_Client extends CI_Xmlrpc
 
 		$url = parse_url('http://'.$server);
 
-		if (isset($url['User'], $url['pass']))
+		if (isset($url['user'], $url['pass']))
 		{
-			$this->username = $url['User'];
+			$this->username = $url['user'];
 			$this->password = $url['pass'];
 		}
 
@@ -1886,7 +1886,7 @@ class XML_RPC_Values extends CI_Xmlrpc
 	public function serializeval($o)
 	{
 		$array = $o->me;
-		list($value, $type) = array(reset($ar), key($array));
+		list($value, $type) = array(reset($array), key($array));
 		return "<value>\n".$this->serializedata($type, $value)."</value>\n";
 	}
 

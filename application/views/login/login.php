@@ -36,6 +36,9 @@ $this->load->helper('form');
             <input type="submit" name="submit" value="login" class="btn btn-danger">
         </div>
         <?php echo form_close(); ?>
+	    <?php echo form_open("Register/",'class="navbar-form navbar-right"'); ?>
+	    <input type="submit" value="Register" class="btn btn-info">
+	    <?php echo form_close(); ?>
     </div>
 </div>
 <script type="text/javascript" src="<?php echo base_url("assets/js/jQuery-1.10.2.js"); ?>"></script>

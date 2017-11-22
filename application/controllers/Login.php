@@ -31,7 +31,10 @@ class Login extends CI_Controller
 		else {
 			$this->load->model('User');
 			if($this->User->get_entry()) {
-				$this->load->view('landing');
+				$beerAPI = new \library\api\Beer();
+				$beer = $beerAPI->getRandom();
+				$this->load->view('nav_bar_premium');
+				$this->load->view('brewery_premium', $data = array('beer' => $beer));
 			}
 			else {
 				$_POST['login_failure'] = true;
@@ -39,6 +42,10 @@ class Login extends CI_Controller
 			}
 
 		}
+	}
+
+	public function logout(){
+		$this->load->view('login/logout');
 	}
 
 
