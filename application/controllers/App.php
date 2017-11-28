@@ -2,7 +2,7 @@
 header('Access-Control-Allow-Origin: *');
 defined('BASEPATH') OR exit('No direct script access allowed');
 use Respect\Validation\Validator as v;
-class App extends CI_Controller {
+class App extends MY_Controller {
 
 
 
@@ -10,8 +10,11 @@ class App extends CI_Controller {
 	{
 		$beerAPI = new \library\api\Beer();
 		$beer = $beerAPI->getRandom();
-		$this->load->view('nav_bar_basic');
-		$this->load->view('brewery_basic', $data = array('beer' => $beer));
+		if($this->is_logged_in()){
+			$this->load->view('brewery_premium', $data = array('beer' => $beer));
+		}else{
+			$this->load->view('brewery_basic', $data = array('beer' => $beer));
+		}
 	}
 	/*
 	 * Returns http error when handed an invalid request
@@ -31,9 +34,15 @@ class App extends CI_Controller {
 			1=>'beer',
 			2=>'brewery'
 		);
+		$id_user = $this->getLoggedInUser();
+
 
 		$search = new \library\api\Search();
 		$list = $search->execute($types[$_POST['query_type']], $_POST['query'],false);
+		if($id_user && $_POST['query_type'] == 1){
+			$this->load->model('SearchHistory');
+			$this->SearchHistory->create($id_user, $_POST['query'], count($list));
+		}
 		$outputter = new \library\utils\ListOutputter($list);
 		echo $outputter->JSON();
 

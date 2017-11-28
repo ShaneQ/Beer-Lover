@@ -1,12 +1,17 @@
 <?php
-
+use library\utils;
 use Respect\Validation\Validator as v;
-
-class Login extends CI_Controller
+class Login extends MY_Controller
 {
+
 	public function index()
 	{
-		$_POST['login_failure'] = false;
+		$this->load->view('login/login');
+
+	}
+
+
+	public function logins(){
 		$this->load->view('login/login');
 	}
 
@@ -29,12 +34,13 @@ class Login extends CI_Controller
 			$this->load->view('login/login');
 		}
 		else {
-			$this->load->model('User');
-			if($this->User->get_entry()) {
-				$beerAPI = new \library\api\Beer();
-				$beer = $beerAPI->getRandom();
-				$this->load->view('nav_bar_premium');
-				$this->load->view('brewery_premium', $data = array('beer' => $beer));
+			$this->load->model(array('User', 'UserLogin'));
+			$id_user = $this->User->get_entry($_POST['username'], $_POST['password']);
+			if($id_user > 0) {
+				$this->UserLogin->delete($id_user);
+				$user_key = $this->UserLogin->create($id_user);
+				utils\Session::setUserKey($user_key);
+				redirect('Premium/home');
 			}
 			else {
 				$_POST['login_failure'] = true;
@@ -44,8 +50,8 @@ class Login extends CI_Controller
 		}
 	}
 
-	public function logout(){
-		$this->load->view('login/logout');
+	public function register(){
+		$this->load->view('login/register');
 	}
 
 
