@@ -15,4 +15,18 @@ class BeerFavourite extends CI_Model
 		return $this->db->insert_id();
 	}
 
+	public function getBeers(int $id_user){
+
+		$sql = "SELECT * FROM beer_favourite WHERE id_user =? ORDER BY id DESC";
+		$query = $this->db->query($sql, array($id_user));
+		return $query->result_array();
+
+	}
+
+	public function delete(int $id_user, int $id_beer_favourite)
+	{
+		$sql = "DELETE FROM beer_favourite WHERE id_user =?  AND id=?";
+		$this->db->query($sql, array($id_user, $id_beer_favourite));
+	}
+
 }

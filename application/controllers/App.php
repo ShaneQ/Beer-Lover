@@ -11,7 +11,7 @@ class App extends MY_Controller {
 		$beerAPI = new \library\api\Beer();
 		$beer = $beerAPI->getRandom();
 		if($this->is_logged_in()){
-			$this->load->view('brewery_premium', $data = array('beer' => $beer));
+			$this->load->view('beer_info', $data = array('beer' => $beer));
 		}else{
 			$this->load->view('brewery_basic', $data = array('beer' => $beer));
 		}
@@ -36,12 +36,11 @@ class App extends MY_Controller {
 		);
 		$id_user = $this->getLoggedInUser();
 
-
 		$search = new \library\api\Search();
 		$list = $search->execute($types[$_POST['query_type']], $_POST['query'],false);
-		if($id_user && $_POST['query_type'] == 1){
+		if($id_user){
 			$this->load->model('SearchHistory');
-			$this->SearchHistory->create($id_user, $_POST['query'], count($list));
+			$this->SearchHistory->create($id_user, $_POST['query'],$_POST['query_type'], count($list));
 		}
 		$outputter = new \library\utils\ListOutputter($list);
 		echo $outputter->JSON();
@@ -70,4 +69,6 @@ class App extends MY_Controller {
 		echo $outputter->JSON();
 
 	}
+
+
 }
