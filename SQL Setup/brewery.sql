@@ -1,6 +1,8 @@
+CREATE DATABASE  IF NOT EXISTS `brewery` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `brewery`;
 -- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
--- Host: localhost    Database: SwissClock
+-- Host: localhost    Database: brewery
 -- ------------------------------------------------------
 -- Server version	5.7.17
 
@@ -35,6 +37,15 @@ CREATE TABLE `beer_favourite` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `beer_favourite`
+--
+
+LOCK TABLES `beer_favourite` WRITE;
+/*!40000 ALTER TABLE `beer_favourite` DISABLE KEYS */;
+/*!40000 ALTER TABLE `beer_favourite` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `search_history`
 --
 
@@ -56,6 +67,15 @@ CREATE TABLE `search_history` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `search_history`
+--
+
+LOCK TABLES `search_history` WRITE;
+/*!40000 ALTER TABLE `search_history` DISABLE KEYS */;
+/*!40000 ALTER TABLE `search_history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user`
 --
 
@@ -72,6 +92,15 @@ CREATE TABLE `user` (
   UNIQUE KEY `user_email_uindex` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `user_login`
@@ -92,6 +121,15 @@ CREATE TABLE `user_login` (
   CONSTRAINT `user_login_user_id_fk` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_login`
+--
+
+LOCK TABLES `user_login` WRITE;
+/*!40000 ALTER TABLE `user_login` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_login` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -102,4 +140,4 @@ CREATE TABLE `user_login` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-04 13:06:42
+-- Dump completed on 2017-12-04 13:22:34

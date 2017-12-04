@@ -74,11 +74,11 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> 'mysql:host=localhost;port=3306;dbname=SwissClock',
+	'dsn'	=> 'mysql:host=localhost;port=3306;dbname=brewery',
 	'hostname' => '127.0.0.1',
 	'username' => 'root',
 	'password' => 'MyNewPass',
-	'database' => 'SwissClock',
+	'database' => 'brewery',
 	'dbdriver' => 'pdo',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
