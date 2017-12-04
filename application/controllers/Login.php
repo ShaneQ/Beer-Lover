@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 use library\utils;
 use Respect\Validation\Validator as v;
 class Login extends MY_Controller
@@ -23,7 +24,7 @@ class Login extends MY_Controller
 			                    'url'
 		                    ));
 		$this->load->library('form_validation');
-		$this->form_validation->set_rules('username', 'Username', 'required|min_length[8]|max_length[25]', array(
+		$this->form_validation->set_rules('username', 'Username', 'required|min_length[8]|max_length[50]', array(
 			                                            'required' => 'You have not provided %s.',
 			                                            'min_length' => 'Something different.'
 		                                            ));
@@ -35,7 +36,7 @@ class Login extends MY_Controller
 		}
 		else {
 			$this->load->model(array('User', 'UserLogin'));
-			$id_user = $this->User->get_entry($_POST['username'], $_POST['password']);
+			$id_user = $this->User->loginCheck($_POST['username'], $_POST['password']);
 			if($id_user > 0) {
 				$this->UserLogin->delete($id_user);
 				$user_key = $this->UserLogin->create($id_user);
@@ -49,6 +50,7 @@ class Login extends MY_Controller
 
 		}
 	}
+
 
 	public function register(){
 		$this->load->view('login/register');

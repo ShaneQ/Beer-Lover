@@ -26,14 +26,6 @@ $this->load->view('nav_bar_premium');
 							<?php echo $beer->getDescription(); ?>
 						</p>
 					</div>
-					<div class="col-md-2">
-						<div class="row">
-							<input type="hidden" id="brewery-list" value="<?php echo implode(",", $beer->getBreweries()) ?? ''; ?>">
-							<button type="button" id="brewery-list-btn" class="btn btn-info btn-sm">
-								<p style="font-size:small">
-									More From This Brewery</p></button>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -70,7 +62,7 @@ $this->load->view('nav_bar_premium');
 				<td>
 					<?php echo form_open("Premium/deleteSpecificFavouriteBeer"); ?>
 					<input type="hidden" name="id_beer_favourite" value="<?php echo $result['id']; ?>">
-					<input type="submit" value="remove" class="btn btn-danger btn-sm">
+					<input type="submit" value="remove" class="btn btn-danger btn-sm remove_beer">
 					<?php echo form_close(); ?>
 				</td>
 
@@ -85,6 +77,9 @@ $this->load->view('nav_bar_premium');
 
 <script>
 	$(document).ready(function() {
-		$('#test').DataTable();
+		$('#test').DataTable({
+			responsive: true
+		});
 	});
+
 </script>

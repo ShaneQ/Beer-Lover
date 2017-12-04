@@ -116,24 +116,6 @@ $this->load->view('nav_bar_premium');
 	var resultTemplate = $('#result-item-template').html();
 	$('#result-item-template').remove();
 	var BASEPATH = "<?php echo base_url();?>";
-
-	function saveBeer()
-	{
-		var form_data = $('#favourite_beer').serialize();
-		jQuery.ajax({
-			type   : "POST",
-			url    : BASEPATH + "index.php/premium/saveBeer",
-			data   : form_data,
-			cache  : false,
-			async  : false,
-			success: function(response) {
-				systemAlert('success', "Beer saved to favourites");
-			},
-			error  : function(jqXHR, textStatus, errorThrown) {
-				systemAlert('danger', "Apologies we encountered an issue");
-			}
-		});
-	}
 	function searchBeer(search_criteria){
 		$('#query').val(search_criteria);
 		$('#q_1').attr('checked', true);

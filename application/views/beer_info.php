@@ -71,12 +71,6 @@ $this->load->view('nav_bar_premium');
 							</form>
 						</div>
 						<br>
-						<div class="row">
-							<input type="hidden" id="brewery-list" value="<?php echo implode(",", $beer->getBreweries()) ?? ''; ?>">
-							<button type="button" id="brewery-list-btn" class="btn btn-info btn-sm">
-								<p style="font-size:small">
-									More From This Brewery</p></button>
-						</div>
 
 					</div>
 
@@ -96,22 +90,6 @@ $this->load->view('nav_bar_premium');
 	$('#result-item-template').remove();
 	var BASEPATH = "<?php echo base_url();?>";
 
-	function saveBeer()
-	{
-		var form_data = $('#favourite_beer').serialize();
-		jQuery.ajax({
-			type   : "POST",
-			url    : BASEPATH + "index.php/premium/saveBeer",
-			data   : form_data,
-			cache  : false,
-			async  : false,
-			success: function(response) {
-				systemAlert('success', "Beer saved to favourites");
-			},
-			error  : function(jqXHR, textStatus, errorThrown) {
-				systemAlert('danger', "Apologies we encountered an issue");
-			}
-		});
-	}
+
 
 </script>

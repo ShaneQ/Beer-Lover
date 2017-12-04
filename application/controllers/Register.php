@@ -1,31 +1,41 @@
 <?php
-
+defined('BASEPATH') OR exit('No direct script access allowed');
+use library\utils;
 class Register extends MY_Controller
 {
     public function index()
     {
-	    $this->load->view('login/header');
+
         $this->load->view('login/register');
     }
 
     public function registerIt()
     {
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('first_name', 'First name', 'required|min_length[5]|max_length[12]');
-        $this->form_validation->set_rules('last_name', 'Last Name', 'required|min_length[5]|max_length[12]');
-        $this->form_validation->set_rules('email_one', 'Email', 'required|valid_email');
-        $this->form_validation->set_rules('email_two', 'Email confirmation', 'required|valid_email|matches[email_one]');
-        $this->form_validation->set_rules('password', 'password', 'required|min_length[5]|max_length[12]');
-
-
-        $this->load->library('form_validation');
+	    $this->load->model(array('User', 'UserLogin'));
+        $this->form_validation->set_rules('first_name', 'First name', 'required|min_length[1]|max_length[35]');
+        $this->form_validation->set_rules('last_name', 'Last Name', 'required|min_length[1]|max_length[35]');
+        $this->form_validation->set_rules('email_one', 'Email', 'required|valid_email|max_length[50]');
+        $this->form_validation->set_rules('email_two', 'Email confirmation', 'required|valid_email|matches[email_one]|max_length[50]');
+        $this->form_validation->set_rules('password', 'password', 'required|min_length[8]|max_length[12]');
 
         if ($this->form_validation->run() == FALSE) {
            $this->index();
         } else {
-            $this->load->model('User');
-            $this->User->insert_entry();
-            $this->load->view('formsuccess');
+	        $email_check =  $this->User->getUserId($_POST['email_one']);
+	        if(!$email_check){
+		        $id_user = $this->User->insert_entry($_POST['first_name'], $_POST['last_name'],$_POST['email_one'],$_POST['password']);
+		        if($id_user > 0) {
+			        $this->UserLogin->delete($id_user);
+			        $user_key = $this->UserLogin->create($id_user);
+			        utils\Session::setUserKey($user_key);
+			        redirect('Premium/home');
+		        }
+	        }else{
+		        $data["email_exists"] = 'Email currently exists';
+		        $this->load->view('login/register', $data);
+	        }
+
         }
     }
 
@@ -51,9 +61,9 @@ class Register extends MY_Controller
 		    $this->load->view('profile_settings');
 	    } else {
 		    $id_user = $this->getLoggedInUser();
-		    $old_password_db =  $this->User->checkPassword($id_user,$_POST['password_old']);
+		    $password_check =  $this->User->checkPassword($id_user,$_POST['password_old']);
 		    $data["old_password_matching"]='';
-		    if($_POST['password_old'] !== $old_password_db){
+		    if(!$password_check){
 			    $data["old_password_matching"] = 'Old password did not match';
 			    $this->load->view('profile_settings', $data);
 		    }else{
