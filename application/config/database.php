@@ -77,7 +77,7 @@ $db['default'] = array(
 	'dsn'	=> 'mysql:host=localhost;port=3306;dbname=brewery',
 	'hostname' => '127.0.0.1',
 	'username' => 'root',
-	'password' => 'MyNewPass',
+	'password' => '',
 	'database' => 'brewery',
 	'dbdriver' => 'pdo',
 	'dbprefix' => '',
